@@ -19,3 +19,11 @@ Content-Type: application/json
 	"poster": "https://img.fruugo.com/product/4/49/1441494_max.jpg",
 	"genre": ["Crime", "Drama"]
 }
+
+### Update a movie
+PATCH http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
+
+{
+	"year": 1974
+}
