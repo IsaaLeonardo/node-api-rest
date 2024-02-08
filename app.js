@@ -1,5 +1,6 @@
 import express from 'express'
 import { readJSON } from './utils.js'
+import { validateMovie } from './schemas/movies.js'
 
 const app = express()
 app.disable('x-powered-by')
@@ -35,25 +36,15 @@ app.listen(PORT, () => {
 })
 
 app.post('/movies', (req, res) => {
-	const {
-		title,
-		genre,
-		year,
-		director,
-		duration,
-		rate,
-		poster
-	} = req.body
+	const result = validateMovie(req.body)
+	
+	if (result.error) {
+		return res.status(400).json({ error: JSON.parse(result.error.message) })
+	}
 	
 	const newMovie = {
 		id: crypto.randomUUID(),
-		title,
-		genre,
-		director,
-		year,
-		duration,
-		rate: rate ?? 0,
-		poster
+		...result.data
 	}
 	
 	movies.push()
