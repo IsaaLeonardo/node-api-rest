@@ -3,6 +3,7 @@ import { readJSON } from './utils.js'
 
 const app = express()
 app.disable('x-powered-by')
+app.use(express.json());
 
 const movies = readJSON('./movies.json')
 
@@ -31,4 +32,30 @@ const PORT = process.env.PORT ?? 1234
 
 app.listen(PORT, () => {
 	console.log(`server listening on port http://localhost:${PORT}`)
+})
+
+app.post('/movies', (req, res) => {
+	const {
+		title,
+		genre,
+		year,
+		director,
+		duration,
+		rate,
+		poster
+	} = req.body
+	
+	const newMovie = {
+		id: crypto.randomUUID(),
+		title,
+		genre,
+		director,
+		year,
+		duration,
+		rate: rate ?? 0,
+		poster
+	}
+	
+	movies.push()
+	res.status(201).json(newMovie)
 })
